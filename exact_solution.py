@@ -14,7 +14,7 @@ class ExactSolution:
         h = ExactSolution.getStep(x0, X, N)
 
         xVal = np.array([(x0 + h*i) for i in range(N)])
-        yVal = np.array([y(i, x0, y0) for i in xVal])
+        yVal = np.array([y(i, x0, y0, h) for i in xVal])
 
         return xVal, yVal
 

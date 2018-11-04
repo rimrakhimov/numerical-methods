@@ -6,20 +6,19 @@ import numpy as np
 def f(x, y):
     return y**2 * exp(x) - 2 * y
 
-def y(x, x0, y0, eps=10**(-1)):
+def y(x, x0, y0, eps):
     if (y0 == 0):
         return 0
     else:
         c = (1 - y0 * exp(x0)) / (y0 * exp(2*x0))
         res = (exp(x) + c * exp(2*x))
-        if abs(res) < eps:
-            resp = (exp(x+1) + c * exp(2*(x+1)))
-            resn = (exp(x-1) + c * exp(2*(x-1)))
-            if resp*resn < 0:
-                return float('inf')
+        resp = (exp(x+eps/2) + c * exp(2*(x+eps/2)))
+        resn = (exp(x-eps/2) + c * exp(2*(x-eps/2)))
+        if resp*resn < 0:
+            return float('inf')
         return 1 / res
 
-diff = DifferentialEquation(f, 1, 1, 10, 50, y)
+diff = DifferentialEquation(f, 1, 1, 10, 30, y)
 
 xVal, yVal = diff.getExactSolution()
 # xVal, yVal = diff.eulersMethodSolution()
