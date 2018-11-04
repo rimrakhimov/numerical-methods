@@ -1,7 +1,6 @@
 from differential_equation import DifferentialEquation
 from math import exp
 import matplotlib.pyplot as plt
-import numpy as np
 
 def f(x, y):
     return y**2 * exp(x) - 2 * y
@@ -18,13 +17,21 @@ def y(x, x0, y0, eps):
             return float('inf')
         return 1 / res
 
-diff = DifferentialEquation(f, 1, 1, 10, 30, y)
+diff = DifferentialEquation(f, 1, 1, -5, 30, y)
 
 xVal, yVal = diff.getExactSolution()
-# xVal, yVal = diff.eulersMethodSolution()
-# xVal, yVal = diff.improveEulerMethodSolution()
+print(list(zip(xVal, yVal)))
+xVal, yVal = diff.eulersMethodSolution()
+print("Euler")
+print(list(zip(xVal, yVal)))
+xVal, yVal = diff.improveEulerMethodSolution()
+print("Improve:")
+print(list(zip(xVal, yVal)))
+xVal, yVal = diff.rungeKuttaMethodSolution()
+print(list(zip(xVal, yVal)))
 
-plt.plot(xVal, yVal, label='linear')
-plt.show()
+
+# plt.plot(xVal, yVal, label='linear')
+# plt.show()
 
 # print(y(3.16, 1, 1))eps=10**(-1)

@@ -12,24 +12,23 @@ class EulersMethod:
         N = equation.getN()
         h = EulersMethod.getStep(x0, X, N)
 
-        xVal = np.array([(x0 + h * i) for i in range(N)])
+        xVal = np.array([(x0 + h * i) for i in range(N+1)])
 
         isInf = False
         res = [y0]
-        isNeg = res[0] < 0
-        for i in range(N-1):
-            print(isNeg)
-            if y(xVal[i], x0, y0) == float('inf'):
-                isInf = True
-                res.append(float('inf'))
-            elif isInf:
-                isInf = False
-                res.append(y(xVal[i], x0, y0))
-            elif (isNeg and y(xVal[i], x0, y0) > 0) or ((not isNeg) and y(xVal[i], x0, y0) < 0):
-                res.append(y(xVal[i], x0, y0))
-                isNeg = not isNeg
-            else:
-                res.append(res[i] + h*f(xVal[i], res[i]))
+        try:
+            for i in range(N):
+                if y(xVal[i+1], x0, y0, h) == float('inf'):
+                    isInf = True
+                    res.append(float('inf'))
+                elif isInf:
+                    isInf = False
+                    res.append(y(xVal[i+1], x0, y0, h))
+                else:
+                    res.append(res[i] + h*f(xVal[i], res[i]))
+        except OverflowError:
+            print(h)
+            print(list(zip(xVal, res)))
 
         yVal = np.array(res)
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-class ImprovedEulerMethod:
+class RungeKuttaMethod:
 
     @staticmethod
     def getValues(equation):
@@ -10,7 +10,7 @@ class ImprovedEulerMethod:
         y0 = equation.gety0()
         X = equation.getX()
         N = equation.getN()
-        h = ImprovedEulerMethod.getStep(x0, X, N)
+        h = RungeKuttaMethod.getStep(x0, X, N)
 
         xVal = np.array([(x0 + h * i) for i in range(N+1)])
 
@@ -26,8 +26,10 @@ class ImprovedEulerMethod:
                     yVal.append(y(xVal[i+1], x0, y0, h))
                 else:
                     k1 = f(xVal[i], yVal[i])
-                    k2 = f(xVal[i] + h, yVal[i] + h * k1)
-                    yVal.append(yVal[i] + h/2*(k1+k2))
+                    k2 = f(xVal[i] + h/2, yVal[i] + h/2 * k1)
+                    k3 = f(xVal[i] + h/2, yVal[i] + h/2 * k2)
+                    k4 = f(xVal[i] + h, yVal[i] + h * k3)
+                    yVal.append(yVal[i] + h/6*(k1+2*k2+2*k3+k4))
         except OverflowError:
             print(h)
             print(list(zip(xVal, yVal)))

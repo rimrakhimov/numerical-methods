@@ -1,6 +1,7 @@
 from exact_solution import ExactSolution
 from euler import EulersMethod
 from improved_euler import ImprovedEulerMethod
+from runge_kutta import RungeKuttaMethod
 
 class DifferentialEquation:
     def __init__(self, f, x0, y0, X, N, y):
@@ -49,4 +50,8 @@ class DifferentialEquation:
 
     def improveEulerMethodSolution(self):
         xVal, yVal = ImprovedEulerMethod.getValues(self)
+        return xVal, yVal
+
+    def rungeKuttaMethodSolution(self):
+        xVal, yVal = RungeKuttaMethod.getValues(self)
         return xVal, yVal
