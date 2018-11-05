@@ -15,24 +15,23 @@ class EulersMethod:
         xVal = np.array([(x0 + h * i) for i in range(N+1)])
 
         isInf = False
-        res = [y0]
+        yVal = [y0]
         try:
             for i in range(N):
                 if y(xVal[i+1], x0, y0, h) == float('inf'):
                     isInf = True
-                    res.append(float('inf'))
+                    yVal.append(float('inf'))
                 elif isInf:
                     isInf = False
-                    res.append(y(xVal[i+1], x0, y0, h))
+                    yVal.append(y(xVal[i+1], x0, y0, h))
                 else:
-                    res.append(res[i] + h*f(xVal[i], res[i]))
+                    yVal.append(yVal[i] + h*f(xVal[i], yVal[i]))
         except OverflowError:
-            print(h)
-            print(list(zip(xVal, res)))
+            return None
 
-        yVal = np.array(res)
+        yVal = np.array(yVal)
 
-        return xVal, yVal
+        return (xVal, yVal)
 
     @staticmethod
     def getStep(x0, X, N):

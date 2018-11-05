@@ -29,12 +29,11 @@ class ImprovedEulerMethod:
                     k2 = f(xVal[i] + h, yVal[i] + h * k1)
                     yVal.append(yVal[i] + h/2*(k1+k2))
         except OverflowError:
-            print(h)
-            print(list(zip(xVal, yVal)))
+            return None
 
         yVal = np.array(yVal)
 
-        return xVal, yVal
+        return (xVal, yVal)
 
     @staticmethod
     def getStep(x0, X, N):

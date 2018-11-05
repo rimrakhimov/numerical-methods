@@ -31,12 +31,11 @@ class RungeKuttaMethod:
                     k4 = f(xVal[i] + h, yVal[i] + h * k3)
                     yVal.append(yVal[i] + h/6*(k1+2*k2+2*k3+k4))
         except OverflowError:
-            print(h)
-            print(list(zip(xVal, yVal)))
+            return None
 
         yVal = np.array(yVal)
 
-        return xVal, yVal
+        return (xVal, yVal)
 
     @staticmethod
     def getStep(x0, X, N):

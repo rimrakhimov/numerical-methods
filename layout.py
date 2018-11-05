@@ -35,8 +35,8 @@ class MainWindow(wx.Frame):
         boxsizer.Add(self.eulersMethodCheckBox, flag=wx.LEFT | wx.TOP, border=5)
         self.improvedEulerMethodCheckBox = wx.CheckBox(panel, label="Improved Euler Method")
         boxsizer.Add(self.improvedEulerMethodCheckBox, flag=wx.LEFT, border=5)
-        self.rungeKuttaMethodCheckBod = wx.CheckBox(panel, label="Runge-Kutta Method")
-        boxsizer.Add(self.rungeKuttaMethodCheckBod, flag=wx.LEFT | wx.BOTTOM, border=5)
+        self.rungeKuttaMethodCheckBox = wx.CheckBox(panel, label="Runge-Kutta Method")
+        boxsizer.Add(self.rungeKuttaMethodCheckBox, flag=wx.LEFT | wx.BOTTOM, border=5)
         sizer.Add(boxsizer, pos=(2, 0), span=(1, 3), flag=wx.EXPAND | wx.TOP | wx.RIGHT | wx.LEFT, border=10)
 
         textx0 = wx.StaticText(panel, label="x0")
@@ -73,6 +73,7 @@ class MainWindow(wx.Frame):
 
         localErrorButton = wx.Button(panel, label="Local Error")
         sizer.Add(localErrorButton, pos=(8, 2), flag=wx.BOTTOM | wx.RIGHT, border=10)
+        localErrorButton.Bind(wx.EVT_BUTTON, self.OnLocalErrorButton)
 
         globalErrorBox = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -91,6 +92,7 @@ class MainWindow(wx.Frame):
 
         globalErrorButton = wx.Button(panel, label="Global Error")
         sizer.Add(globalErrorButton, pos=(10, 2), flag=wx.BOTTOM | wx.RIGHT, border=10)
+        globalErrorButton.Bind(wx.EVT_BUTTON, self.OnGlobalErrorButton)
 
         sizer.AddGrowableCol(2)
         panel.SetSizer(sizer)
@@ -103,6 +105,24 @@ class MainWindow(wx.Frame):
             event.Skip()
         else:
             self.Controller.OnSolutionButton(event)
+
+    def OnLocalErrorButton(self, event):
+        if not self.isMethodsGridFilled(exactSolution=False):
+            event.Skip()
+        elif not self.isDataGridFilled():
+            event.Skip()
+        else:
+            self.Controller.OnLocalErrorButton(event)
+
+    def OnGlobalErrorButton(self, event):
+        if not self.isMethodsGridFilled(exactSolution=False):
+            event.Skip()
+        elif not self.isDataGridFilled(N=False):
+            event.Skip()
+        elif not self.isRangeGridFilled():
+            event.Skip()
+        else:
+            self.Controller.OnGlobalErrorButton(event)
 
     def OnKeyPressCheckInt(self, event):
         keycode = event.GetKeyCode()
@@ -142,18 +162,22 @@ class MainWindow(wx.Frame):
             if '.' not in val and insertionPoint > 0:
                 event.Skip()
 
-    def isMethodsGridFilled(self):
-        result = self.exactSolutionCheckBox.GetValue() or \
+    def NotifyNothingToShow(self):
+        wx.MessageBox('Cannot solve equation by specified methods with given value N', 'Error',
+                      wx.OK | wx.ICON_ERROR)
+
+    def isMethodsGridFilled(self, exactSolution=True):
+        result = (exactSolution and self.exactSolutionCheckBox.GetValue()) or \
                self.eulersMethodCheckBox.GetValue() or \
                self.improvedEulerMethodCheckBox.GetValue() or \
-               self.rungeKuttaMethodCheckBod.GetValue()
+               self.rungeKuttaMethodCheckBox.GetValue()
 
         if not result:
             wx.MessageBox('Choose at least one solution method', 'Not filled',
                           wx.OK | wx.ICON_ERROR)
         return result
 
-    def isDataGridFilled(self):
+    def isDataGridFilled(self, N=True):
         result = True
         if len(self.tcx0.GetValue()) == 0 or self.tcx0.GetValue() == '-':
             self.tcx0.SetBackgroundColour((255, 204, 204, 0))
@@ -164,7 +188,7 @@ class MainWindow(wx.Frame):
         if len(self.tcX.GetValue()) == 0 or self.tcX.GetValue() == '-':
             self.tcX.SetBackgroundColour((255, 204, 204, 0))
             result = False
-        if len(self.tcN.GetValue()) == 0:
+        if (N and len(self.tcN.GetValue()) == 0):
             self.tcN.SetBackgroundColour((255, 204, 204, 0))
             result = False
 
@@ -172,12 +196,13 @@ class MainWindow(wx.Frame):
 
     def isRangeGridFilled(self):
         result = True
-        if len(self.tcRangeTo.GetValue()) == 0 or self.tcRangeTo.GetValue() == '-':
+        if len(self.tcRangeTo.GetValue()) == 0:
             self.tcRangeTo.SetBackgroundColour((255, 204, 204, 0))
             result = False
-        if len(self.tcRangeFrom.GetValue()) == 0 or self.tcRangeFrom.GetValue() == '-':
+        if len(self.tcRangeFrom.GetValue()) == 0:
             self.tcRangeFrom.SetBackgroundColour((255, 204, 204, 0))
             result = False
+        return result
 
 def main():
     app = wx.App()

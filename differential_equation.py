@@ -41,17 +41,17 @@ class DifferentialEquation:
         return self.N
 
     def getExactSolution(self):
-        xVal, yVal = ExactSolution.getValues(self)
-        return xVal, yVal
+        values = ExactSolution.getValues(self)
+        return values
 
     def eulersMethodSolution(self):
-        xVal, yVal = EulersMethod.getValues(self)
-        return xVal, yVal
+        values = EulersMethod.getValues(self)
+        return values
 
     def improveEulerMethodSolution(self):
-        xVal, yVal = ImprovedEulerMethod.getValues(self)
-        return xVal, yVal
+        values = ImprovedEulerMethod.getValues(self)
+        return values
 
     def rungeKuttaMethodSolution(self):
-        xVal, yVal = RungeKuttaMethod.getValues(self)
-        return xVal, yVal
+        values = RungeKuttaMethod.getValues(self)
+        return values
