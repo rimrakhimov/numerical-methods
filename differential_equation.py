@@ -1,7 +1,7 @@
-from exact_solution import ExactSolution
-from euler import EulersMethod
-from improved_euler import ImprovedEulerMethod
-from runge_kutta import RungeKuttaMethod
+from methods.exact_solution import ExactSolution
+from methods.euler import EulersMethod
+from methods.improved_euler import ImprovedEulerMethod
+from methods.runge_kutta import RungeKuttaMethod
 
 class DifferentialEquation:
     def __init__(self, f, x0, y0, X, N, y):
@@ -12,16 +12,6 @@ class DifferentialEquation:
         self.N = N
         self.y = y
 
-    # def setInitialValues(self, x0, y0):
-    #     self.x0 = x0
-    #     self.y0 = y0
-    #
-    # def setX(self, X):
-    #     self.X = X
-    #
-    # def setN(self, N):
-    #     self.N = N
-    #
     def getf(self):
         return self.f
 

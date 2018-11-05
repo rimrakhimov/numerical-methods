@@ -1,6 +1,6 @@
-from layout import MainWindow
+from layouts.layout import MainWindow
 from differential_equation import DifferentialEquation
-from plot_builder import PlotBuilder
+from layouts.plot_builder import PlotBuilder
 import wx
 
 class Controller:

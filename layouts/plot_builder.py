@@ -12,7 +12,7 @@ class PlotBuilder:
 
         plt.ylabel('Y axis')
         plt.xlabel('X axis')
-        plt.legend(legend, loc='upper left')
+        plt.legend(legend, loc='upper right')
         plt.gcf().canvas.set_window_title('Solution')
         plt.xticks(np.arange(min(values[0][0]), max(values[0][0]), 1))
         plt.show()
@@ -27,7 +27,7 @@ class PlotBuilder:
 
         plt.ylabel('Y axis')
         plt.xlabel('X axis')
-        plt.legend(legend, loc='upper left')
+        plt.legend(legend, loc='upper right')
         plt.gcf().canvas.set_window_title('Local Error')
         plt.xticks(np.arange(min(values[0][0]), max(values[0][0]), 1))
         plt.show()
@@ -42,6 +42,6 @@ class PlotBuilder:
 
         plt.ylabel('Y axis')
         plt.xlabel('X axis')
-        plt.legend(legend, loc='upper left')
+        plt.legend(legend, loc='upper right')
         plt.gcf().canvas.set_window_title('Global Error')
         plt.show()

@@ -162,8 +162,8 @@ class MainWindow(wx.Frame):
             if '.' not in val and insertionPoint > 0:
                 event.Skip()
 
-    def NotifyNothingToShow(self):
-        wx.MessageBox('Cannot solve equation by specified methods with given value N', 'Error',
+        def NotifyNothingToShow(self):
+            wx.MessageBox('Cannot solv  e equation by specified methods with given value N', 'Error',
                       wx.OK | wx.ICON_ERROR)
 
     def isMethodsGridFilled(self, exactSolution=True):
