@@ -1,44 +1,26 @@
-import wx
+from math import exp
+from controller import Controller
 
-class MainWindow(wx.Frame):
-    def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=(200, 100))
-        
-        # self.control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
-        # self.CreateStatusBar()
-        #
-        # filemenu = wx.Menu()
-        # menuAbout = filemenu.Append(wx.ID_ABOUT, "&About", " Information about this program")
-        # filemenu.AppendSeparator()
-        # menuExit = filemenu.Append(wx.ID_EXIT, "&Exit", "Terminate the program")
-        #
-        # menubar = wx.MenuBar()
-        # menubar.Append(filemenu, "&File")
-        # self.SetMenuBar(menubar)
-        #
-        # self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
-        # self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
+def f(x, y):
+    res = y**2 * exp(x) - 2 * y
+    if res == float('inf'):
+        raise OverflowError
+    return res
 
-        self.Show()
+def y(x, x0, y0, eps):
+    if (y0 == 0):
+        return 0
+    else:
+        c = (1 - y0 * exp(x0)) / (y0 * exp(2 * x0))
+        res = (exp(x) + c * exp(2 * x))
+        resp = (exp(x + eps / 2) + c * exp(2 * (x + eps / 2)))
+        resn = (exp(x - eps / 2) + c * exp(2 * (x - eps / 2)))
+        if resp * resn < 0:
+            return float('inf')
+        return 1 / res
 
-    def OnAbout(self, e):
-        dlg = wx.MessageDialog(self, "A small text editor", "About Sample Editor", wx.OK)
-        wx.FileDialog
-        dlg.ShowModal()
-        dlg.Destroy()
+def main():
+    Controller(f, y)
 
-    def OnExit(self, e):
-        self.Close()
-
-app = wx.App(False)
-frm = MainWindow(None, title="Hello World")
-
-app.MainLoop()
-
-# class HelloFrame(wx.Frame):
-#     """
-#     A Frame that says Hello World
-#     """
-#     def __init__(self, *args, **kw):
-#         # ensure the parent's __init__ is called
-#         super(HelloFrame, self).__init__(*args, **kw)
+if __name__ == '__main__':
+    main()
