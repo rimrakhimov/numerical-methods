@@ -12,16 +12,16 @@ class DifferentialEquation:
         self.N = N
         self.y = y
 
-    def setInitialValues(self, x0, y0, y):
-        self.x0 = x0
-        self.y0 = y0
-
-    def setX(self, X):
-        self.X = X
-
-    def setN(self, N):
-        self.N = N
-
+    # def setInitialValues(self, x0, y0):
+    #     self.x0 = x0
+    #     self.y0 = y0
+    #
+    # def setX(self, X):
+    #     self.X = X
+    #
+    # def setN(self, N):
+    #     self.N = N
+    #
     def getf(self):
         return self.f
 

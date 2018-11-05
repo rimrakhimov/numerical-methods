@@ -17,21 +17,29 @@ def y(x, x0, y0, eps):
             return float('inf')
         return 1 / res
 
-diff = DifferentialEquation(f, 1, 1, -5, 30, y)
+diff = DifferentialEquation(f, 1, 1, 10, 1000, y)
 
+plt.figure(1)
 xVal, yVal = diff.getExactSolution()
-print(list(zip(xVal, yVal)))
+plt.plot(xVal, yVal)
+# print(list(zip(xVal, yVal)))
 xVal, yVal = diff.eulersMethodSolution()
-print("Euler")
-print(list(zip(xVal, yVal)))
+plt.plot(xVal, yVal)
+# print("Euler")
+# print(list(zip(xVal, yVal)))
 xVal, yVal = diff.improveEulerMethodSolution()
-print("Improve:")
-print(list(zip(xVal, yVal)))
+plt.plot(xVal, yVal)
+# print("Improve:")
+# print(list(zip(xVal, yVal)))
 xVal, yVal = diff.rungeKuttaMethodSolution()
-print(list(zip(xVal, yVal)))
+plt.plot(xVal, yVal)
+# print(list(zip(xVal, yVal)))
 
+legend = ['exact', 'euler', 'improved euler', 'runge-kutta']
+plt.ylabel('Y axis')
+plt.xlabel('X axis')
+plt.legend(legend, loc='upper left')
+plt.gcf().canvas.set_window_title('Solution')
 
 # plt.plot(xVal, yVal, label='linear')
-# plt.show()
-
-# print(y(3.16, 1, 1))eps=10**(-1)
+plt.show()
